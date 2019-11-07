@@ -1,0 +1,14 @@
+@uri=http://localhost:3001/admin/api/
+
+###
+
+GET {{uri}}categories
+
+###
+
+POST {{uri}}categories
+Content-Type: application/json
+
+{
+  "name":"news"
+}
