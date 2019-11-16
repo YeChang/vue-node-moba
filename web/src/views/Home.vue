@@ -27,46 +27,21 @@
       </div>
     </div>
     <!-- end of nav icons -->
-
-    <div class="card bg-white p-3 mt-3 ai-center">
-      <div class="card-header d-flex">
-        <i class="iconfont icon-Menu fs-xl"></i>
-        <div class="fs-xl flex-1 px-2">新闻资讯</div>
-
-        <i class="iconfont icon-icontabmenu"></i>
-      </div>
-      <div class="card-body">
-        <div class="nav">
-          <div class="nav-item active">
-            <div class="nav-link">热门</div>
-          </div>
-          <div class="nav-item ">
-            <div class="nav-link">新闻</div>
-          </div>
-          <div class="nav-item ">
-            <div class="nav-link">公告</div>
-          </div>
-          <div class="nav-item ">
-            <div class="nav-link">公告</div>
-          </div>
-          <div class="nav-item ">
-            <div class="nav-link">公告</div>
-          </div>
+    <m-list-card icon="Menu" title="新闻资讯" :categories="newsCats">
+      <template #items="{category}">
+        <div class="py-2" v-for="(items, i) in category.newsList" :key="i">
+          <span>[{{items.categoryName}}]</span>
+          <span>|</span>
+          <span>{{items.title}}</span>
+          <span>{{items.date}}</span>
         </div>
-      </div>
-    </div>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
+      </template>
+    </m-list-card>
+
+    <m-card icon="Menu" title="英雄列表"></m-card>
+    <m-card icon="Menu" title="精彩视频"></m-card>
+    <m-card icon="Menu" title="图文攻略"></m-card>
+    <m-card icon="Menu" title="新闻资讯"></m-card>
   </div>
 </template>
 
@@ -83,7 +58,50 @@ export default {
         autoplay: {
           delay: 1500
         }
-      }
+      },
+
+      newsCats: [
+        {
+          name: "热门",
+          newsList: new Array(5).fill(1).map(v => ({
+            categoryName: "公告",
+            title: "【已重新开启】翻牌达人活动暂时关闭公告",
+            date: "11/17"
+          }))
+        },
+        {
+          name: "新闻",
+          newsList: new Array(5).fill(1).map(v => ({
+            categoryName: "公告",
+            title: "【已重新开启】翻牌达人活动暂时关闭公告",
+            date: "11/17"
+          }))
+        },
+        {
+          name: "公告",
+          newsList: new Array(5).fill(1).map(v => ({
+            categoryName: "公告",
+            title: "【已重新开启】翻牌达人活动暂时关闭公告",
+            date: "11/17"
+          }))
+        },
+        {
+          name: "活动",
+          newsList: new Array(5).fill(1).map(v => ({
+            categoryName: "公告",
+            title: "【已重新开启】翻牌达人活动暂时关闭公告",
+            date: "11/17"
+          }))
+        },
+        {
+          name: "赛事",
+          newsList: new Array(5).fill(1).map(v => ({
+            categoryName: "公告",
+            title: "【已重新开启】翻牌达人活动暂时关闭公告",
+            date: "11/17"
+          }))
+        }
+      ]
     };
   }
 };
