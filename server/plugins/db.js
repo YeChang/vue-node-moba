@@ -5,5 +5,13 @@ module.exports = app => {
         useFindAndModify: true,
         useUnifiedTopology: true,
     })
+
+
+    require('require-all')(__dirname + '/../models')
+    
+
+
+
+
 }
 

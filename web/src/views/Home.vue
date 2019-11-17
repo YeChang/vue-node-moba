@@ -29,16 +29,38 @@
     <!-- end of nav icons -->
     <m-list-card icon="Menu" title="新闻资讯" :categories="newsCats">
       <template #items="{category}">
-        <div class="py-2" v-for="(items, i) in category.newsList" :key="i">
-          <span>[{{items.categoryName}}]</span>
-          <span>|</span>
-          <span>{{items.title}}</span>
-          <span>{{items.date}}</span>
-        </div>
+        <router-link
+          tag="div"
+          :to="`/articles/${news._id}`"
+          class="py-2 fs-lg d-flex"
+          v-for="(news, i) in category.newsList"
+          :key="i"
+        >
+          <span class="text-info">[{{news.categoryName}}]</span>
+          <span class="px-2">|</span>
+          <span class="flex-1 text-dark-1 text-ellipsis pr-1">{{news.title}}</span>
+          <span class="text-grey-1 fs-sm">{{news.createdAt | date}}</span>
+        </router-link>
       </template>
     </m-list-card>
 
-    <m-card icon="Menu" title="英雄列表"></m-card>
+    <m-list-card icon="card-hero" title="英雄列表" :categories="heroCats">
+      <template #items="{category}">
+        <div class="d-flex flex-wrap" style="margin: 0 -0.5rem">
+          <router-link
+            tag="div"
+            :to="`/heroes/${hero._id}`"
+            class="p-2 text-center"
+            style="width: 20%"
+            v-for="(hero, i) in category.heroList"
+            :key="i"
+          >
+            <img class="w-100" :src="hero.avatar" alt />
+            <div>{{hero.name}}</div>
+          </router-link>
+        </div>
+      </template>
+    </m-list-card>
     <m-card icon="Menu" title="精彩视频"></m-card>
     <m-card icon="Menu" title="图文攻略"></m-card>
     <m-card icon="Menu" title="新闻资讯"></m-card>
@@ -47,8 +69,13 @@
 
 <script>
 // @ is an alias to /src
-
+import dayjs from "dayjs";
 export default {
+  filters: {
+    date(val) {
+      return dayjs(val).format("MM/DD");
+    }
+  },
   data() {
     return {
       swiperOption: {
@@ -60,49 +87,23 @@ export default {
         }
       },
 
-      newsCats: [
-        {
-          name: "热门",
-          newsList: new Array(5).fill(1).map(v => ({
-            categoryName: "公告",
-            title: "【已重新开启】翻牌达人活动暂时关闭公告",
-            date: "11/17"
-          }))
-        },
-        {
-          name: "新闻",
-          newsList: new Array(5).fill(1).map(v => ({
-            categoryName: "公告",
-            title: "【已重新开启】翻牌达人活动暂时关闭公告",
-            date: "11/17"
-          }))
-        },
-        {
-          name: "公告",
-          newsList: new Array(5).fill(1).map(v => ({
-            categoryName: "公告",
-            title: "【已重新开启】翻牌达人活动暂时关闭公告",
-            date: "11/17"
-          }))
-        },
-        {
-          name: "活动",
-          newsList: new Array(5).fill(1).map(v => ({
-            categoryName: "公告",
-            title: "【已重新开启】翻牌达人活动暂时关闭公告",
-            date: "11/17"
-          }))
-        },
-        {
-          name: "赛事",
-          newsList: new Array(5).fill(1).map(v => ({
-            categoryName: "公告",
-            title: "【已重新开启】翻牌达人活动暂时关闭公告",
-            date: "11/17"
-          }))
-        }
-      ]
+      newsCats: [],
+      heroCats: []
     };
+  },
+  methods: {
+    async fetchNewsCats() {
+      const res = await this.$http.get("news/list");
+      this.newsCats = res.data;
+    },
+    async fetchHeroCats() {
+      const res = await this.$http.get("heroes/list");
+      this.heroCats = res.data;
+    }
+  },
+  created() {
+    this.fetchNewsCats();
+    this.fetchHeroCats();
   }
 };
 </script>
