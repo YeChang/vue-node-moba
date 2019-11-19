@@ -1,4 +1,4 @@
-@uri=http://localhost:3001/admin/api/
+@uri=http://localhost:3001/web/api/heroes/
 
 ###
 
@@ -12,3 +12,7 @@ Content-Type: application/json
 {
   "name":"news"
 }
+
+###
+// http://localhost:3001/web/api/heroes/5dd0f9041992c73e88576eb9
+GET {{uri}}5dd0f9041992c73e88576eb9 HTTP/1.1
